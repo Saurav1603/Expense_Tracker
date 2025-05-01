@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+        /* --- Vibrant Color Palette --- */
+        :root {
+            --primary-color: #1abc9c; /* Vibrant Teal */
+            --primary-darker: #16a085; /* Darker Teal for Hover/Headings */
+            --secondary-color: #3498db; /* Bright Blue for links */
+            --success-color: #2ecc71; /* Vibrant Green */
+            --success-darker: #27ae60;
+            --danger-color: #e74c3c; /* Vibrant Red */
+            --danger-darker: #c0392b;
+            --light-bg: #f4f7f6;
+            --white-bg: #ffffff;
+            --dark-text: #2c3e50; /* Dark Blue-Grey */
+            --medium-text: #555;
+            --light-text: #ffffff;
+            --border-color: #e0e0e0;
+            --subtle-accent-bg: #e8f8f5; /* Very light teal for subtle highlights */
+        }
+
+        /* --- General Styles --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 30px auto;
+            padding: 25px 30px; /* Slightly more padding */
+            background-color: var(--white-bg);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+            border-radius: 10px; /* More rounded */
+        }
+
+        h1, h2 {
+            color: var(--primary-darker); /* Use darker primary color */
+            margin-bottom: 0.8em;
+            padding-bottom: 0.4em;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1.2em;
+             border-bottom: 2px solid var(--primary-color); /* Accent border */
+             display: inline-block; /* Fit border to text */
+             padding: 0 10px 5px 10px; /* Padding around text */
+        }
+         /* Center H1 properly */
+         .header-wrapper { text-align: center; margin-bottom: 1.5em;}
+
+
+        h2 {
+            border-bottom: 1px solid var(--border-color);
+            color: var(--dark-text); /* Keep H2 less prominent */
+        }
+
+        a {
+            color: var(--secondary-color); /* Bright blue for links */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        a:hover {
+            color: #2980b9; /* Darker blue on hover */
+            text-decoration: none; /* Usually looks cleaner without underline on hover */
+        }
+
+        /* --- Navigation --- */
+        nav {
+            margin-bottom: 35px;
+            padding-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        nav a {
+            margin: 0 12px;
+            padding: 5px 10px;
+            font-weight: 500;
+            color: var(--medium-text);
+            border-radius: 4px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        nav a:hover, nav a.active {
+            color: var(--primary-darker);
+            background-color: var(--subtle-accent-bg);
+        }
+
+        /* --- Form Styles --- */
+        form {
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: #fdfdfd; /* Slightly off-white */
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--dark-text); /* Darker label */
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form input[type="date"],
+        form select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 18px; /* More space */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        form input:focus, form select:focus {
+            outline: none;
+            border-color: var(--primary-color); /* Highlight focus with primary color */
+            box-shadow: 0 0 5px rgba(26, 188, 156, 0.3); /* Subtle glow */
+        }
+         form input[type="number"] { -moz-appearance: textfield; }
+         form input[type="number"]::-webkit-inner-spin-button,
+         form input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+        form button {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--success-color); /* Use success color */
+            color: var(--light-text);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        form button:hover {
+            background-color: var(--success-darker);
+             transform: translateY(-1px); /* Slight lift */
+             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+         form button:active {
+             transform: translateY(0);
+         }
+
+        /* --- Table Styles --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px; /* Apply radius to table */
+            overflow: hidden; /* Ensure radius clips content */
+        }
+
+        th, td {
+            padding: 14px 18px; /* More padding */
+            text-align: left;
+             border-bottom: 1px solid var(--border-color); /* Only bottom borders */
+        }
+         /* Remove border from last row */
+         tbody tr:last-child td {
+             border-bottom: none;
+         }
+
+
+        th {
+            background-color: var(--primary-color); /* Use vibrant primary for header */
+            color: var(--light-text); /* White text */
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.08em; /* More spacing */
+        }
+
+        /* Subtle row background */
+        tbody tr {
+             transition: background-color 0.2s ease;
+        }
+        /* Use subtle accent for striping */
+        tbody tr:nth-child(even) {
+             background-color: var(--subtle-accent-bg);
+        }
+        tbody tr:hover {
+             background-color: #d1f2eb; /* Slightly darker teal on hover */
+        }
+
+        td:nth-child(4) { /* Amount column */
+            text-align: right;
+            font-weight: 600; /* Make amount stand out */
+             color: var(--dark-text);
+        }
+         td:nth-child(1) { /* Date */
+              white-space: nowrap;
+              color: var(--medium-text);
+              font-size: 0.95em;
+         }
+         td:nth-child(3) { /* Category */
+              font-style: italic;
+              color: var(--medium-text);
+         }
+
+
+        /* --- Action Links (Delete) --- */
+        .action-link {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            text-align: center;
+            transition: all 0.2s ease; /* Smooth transition */
+            border: 1px solid transparent; /* Placeholder for border */
+            font-weight: 500;
+        }
+        .delete-link {
+            color: var(--danger-color);
+            background-color: #fdedec; /* Lighter red background */
+            border-color: #f8d7da; /* Subtle border */
+        }
+        .delete-link:hover {
+            background-color: var(--danger-color);
+            color: var(--light-text);
+            text-decoration: none;
+            border-color: var(--danger-color);
+             transform: scale(1.05); /* Slight scale effect */
+             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* --- Total Display --- */
+        .total {
+            font-weight: bold;
+            margin-top: 25px;
+            padding: 18px 25px;
+            background-color: var(--subtle-accent-bg); /* Use light teal */
+            border-left: 6px solid var(--primary-color); /* Use primary color border */
+            font-size: 1.3em; /* Larger total */
+            text-align: right;
+            border-radius: 0 5px 5px 0;
+            color: var(--primary-darker); /* Darker teal text */
+        }
+        .total span {
+            color: var(--medium-text);
+            margin-right: 8px;
+            font-weight: normal;
+            font-size: 0.9em;
+        }
+
+        /* --- Responsive (Very Basic) --- */
+        @media (max-width: 768px) {
+            .container {
+                margin: 15px;
+                padding: 15px 20px;
+            }
+            th, td {
+                padding: 10px 12px;
+            }
+             h1 { font-size: 1.8em; }
+             h2 { font-size: 1.4em; }
+             form button { width: 100%; padding: 14px; } /* Full width button */
+        }
+        @media (max-width: 480px) {
+             nav a { margin: 0 5px; font-size: 0.9em; padding: 4px 6px;}
+             /* Consider stacking table data on very small screens if needed */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container"> <!-- Wrap content in container -->
+
+        <!-- Added wrapper for better H1 centering -->
+        <div class="header-wrapper">
+             <h1>Expense Tracker</h1>
+        </div>
+
+        <!-- Navigation/Filtering Links -->
+        <nav>
+             <a href="{{ url_for('index') }}">View All</a>
+             <a href="{{ url_for('view_by_category', category_name='Food') }}">Food</a>
+             <a href="{{ url_for('view_by_category', category_name='Transport') }}">Transport</a>
+             <a href="{{ url_for('view_by_category', category_name='Entertainment') }}">Entertainment</a>
+             <a href="{{ url_for('view_by_category', category_name='Utilities') }}">Utilities</a>
+             <a href="{{ url_for('view_by_category', category_name='Rent/Mortgage') }}">Rent/Mortgage</a>
+             <a href="{{ url_for('view_by_category', category_name='Other') }}">Other</a>
+        </nav>
+
+
+        <!-- Form to Add New Expense -->
+        <h2>Add New Expense</h2>
+        <form action="{{ url_for('add_expense') }}" method="post">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" placeholder="e.g., Lunch with colleagues" required>
+
+            <label for="amount">Amount ($):</label>
+            <input type="number" id="amount" name="amount" step="0.01" placeholder="e.g., 24.75" required>
+
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="" disabled selected>-- Select Category --</option> <!-- Improved placeholder -->
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Rent/Mortgage">Rent/Mortgage</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <button type="submit">Add Expense</button>
+        </form>
+
+        <!-- Display Expenses -->
+        <h2>
+            {% if filter_title %}
+                {{ filter_title }}
+            {% else %}
+                Expense History
+            {% endif %}
+        </h2>
+        {% if expenses %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                <tr>
+                    <td>{{ expense.date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ expense.description }}</td>
+                    <td>{{ expense.category }}</td>
+                    <td>Rs {{ "%.2f"|format(expense.amount) }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_expense', expense_id=expense.id) }}" class="action-link delete-link" onclick="return confirm('Are you sure you want to delete this expense?');">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="total">
+            <span>Total Displayed:</span> Rs {{ "%.2f"|format(total_expenses) }}
+        </div>
+        {% else %}
+        <p style="text-align: center; color: var(--medium-text); padding: 20px; background-color: #f9f9f9; border-radius: 5px;">
+            Looks like your expense list is empty! Add your first expense using the form above.
+        </p> <!-- Nicer empty state message -->
+        {% endif %}
+
+    </div> <!-- End container -->
+
+</body>
+</html>
